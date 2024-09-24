@@ -2,7 +2,7 @@
 
 #---------------wp installation---------------
 # wp-cli install
-curl- O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 # wp-cli permission
 chmod +x wp-cli.phar
 # wp-cli move to bin
@@ -23,9 +23,9 @@ ping_mariadb_container() {
 }
 start_time=$(date +%s) #get the current time in seconds
 end_time=$((start_time + 20)) #set the end time to 20 seconds after the start time
-while [ $(date +%s) -lt $end_time]; do
+while [ $(date +%s) -lt $end_time ]; do
     ping_mariadb_container
-    if [$? -eq 0]; then
+    if [$? -eq 0 ]; then
         echo "[=======MARIADB IS UP AND RUNNING=======]"
         break
     else
@@ -34,7 +34,7 @@ while [ $(date +%s) -lt $end_time]; do
     fi
 done
 
-if [ $(date +%s) -ge $end_time]; then
+if [ $(date +%s) -ge $end_time ]; then
     echo "[=======MARIADB IS NOT RESPONDING=======]"
 fi
 
