@@ -1,5 +1,5 @@
-WP_DATA = /home/data/wordpress
-DB_DATA = /home/data/mariadb
+WP_DATA = /~/inception/volumes/wordpress
+DB_DATA = /~/inception/volumes/mariadb
 
 all: up
 

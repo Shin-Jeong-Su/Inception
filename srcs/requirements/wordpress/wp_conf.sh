@@ -18,7 +18,7 @@ chown -R www-data:www-data /var/www/wordpress
 #---------------ping mariadb---------------
 # check if mariadb container is up and running
 ping_mariadb_container() {
-    nc -zv mariadb 3306 > /dev/bull #ping the mariadb container
+    nc -zv mariadb 3306 > /dev/null #ping the mariadb container
     return $? #return the exit status of the ping command
 }
 start_time=$(date +%s) #get the current time in seconds

@@ -2,7 +2,10 @@
 
 # mariadb start
 service mariadb start
-sleep 5
+until nc -z localhost 3306; do
+    echo "Waiting for MariaDB to start..."
+    sleep 1
+done
 
 # mariadb config
 # create database if not exists
@@ -14,12 +17,12 @@ mariadb -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYS
 #grant privilegs to user
 mariadb -e "GRANT ALL PRIVILEGES ON ${MYSQL_DB}.* TO \`${MYSQL_USER}\`@'%';"
 
-#flush privileges to apply changes
+# flush privileges to apply changes
 mariadb -e "FLUSH PRIVILEGES;"
 
-#mariadb restart
+# mariadb restart
 # shutdown mariadb to restart with new config
-mysqladmin -u root -p$MYSQL_ROOT_PASSWORD shutdown
+mysqladmin -u root -p $MYSQL_ROOT_PASSWORD shutdown
 
-#restart mariadb with new config in the background to keep the container running
+# restart mariadb with new config in the background to keep the container running
 mysqld_safe --port=3306 --bind-address=0.0.0.0 --datadir='/var/lib/mysql'

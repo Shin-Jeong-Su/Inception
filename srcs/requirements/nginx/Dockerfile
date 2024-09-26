@@ -19,8 +19,8 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 #create the wordpress directory
 RUN mkdir -p /var/www/wordpress
 
-#change the owner of the wordpress directory to www-data
+#change the owner of the wordpress directory to www-data:www-data
 RUN chown -R www-data:www-data /var/www/wordpress
 
 #define the command to run when the container starts
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
