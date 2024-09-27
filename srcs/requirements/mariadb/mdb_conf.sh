@@ -2,10 +2,7 @@
 
 # mariadb start
 service mariadb start
-until nc -z localhost 3306; do
-    echo "Waiting for MariaDB to start..."
-    sleep 1
-done
+sleep 5
 
 # mariadb config
 # create database if not exists
@@ -22,7 +19,7 @@ mariadb -e "FLUSH PRIVILEGES;"
 
 # mariadb restart
 # shutdown mariadb to restart with new config
-mysqladmin -u root -p $MYSQL_ROOT_PASSWORD shutdown
+mysqladmin -u root -p$MYSQL_ROOT_PASSWORD shutdown
 
 # restart mariadb with new config in the background to keep the container running
 mysqld_safe --port=3306 --bind-address=0.0.0.0 --datadir='/var/lib/mysql'
