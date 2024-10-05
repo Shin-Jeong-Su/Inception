@@ -1,5 +1,21 @@
 version: "3.8"
 
+# volumes
+volumes:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      device: /home/jeshin/inception/data/mariadb
+      o: bind
+      type: none
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      device: /home/jeshin/inception/data/wordpress
+      o: bind
+      type: none
 services:
 # mariadb
   mariadb:
@@ -24,6 +40,8 @@ services:
       - wordpress
     volumes:
       - wordpress:/var/www/wordpress
+    env_file:
+      - ./.env
     networks:
       - inception
     restart: always
@@ -34,6 +52,7 @@ services:
     build: ./requirements/wordpress
     depends_on:
       - mariadb
+      - redis
     volumes:
       - wordpress:/var/www/wordpress
     env_file:
@@ -41,22 +60,16 @@ services:
     networks:
       - inception
     restart: always
-# volumes
-volumes:
-  mariadb:
-    name: mariadb
-    driver: local
-    driver_opts:
-      device: /home/jeshin/inception/data/mariadb
-      o: bind
-      type: none
-  wordpress:
-    name: wordpress
-    driver: local
-    driver_opts:
-      device: /home/jeshin/inception/data/wordpress
-      o: bind
-      type: none
+# redis
+  redis:
+    image: redis
+    container_name: redis
+    build: ./requirements/bonus/redis
+    env_file:
+      - ./.env
+    networks:
+      - inception
+    restart: always
 #network
 networks:
   inception:
