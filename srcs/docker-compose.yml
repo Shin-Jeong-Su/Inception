@@ -70,6 +70,21 @@ services:
     networks:
       - inception
     restart: always
+# vsftpd
+  vsftpd:
+    image: vsftpd
+    container_name: vsftpd
+    build: ./requirements/bonus/vsftpd
+    env_file:
+      - ./.env
+    networks:
+      - inception
+    volumes:
+      - wordpress:/var/www/wordpress
+    ports:
+      - "21:21"
+      - "4559:4559"
+    restart: always
 #network
 networks:
   inception:
